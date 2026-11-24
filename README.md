@@ -46,6 +46,7 @@ Hipotesis yang tidak terbukti tetap dilaporkan apa adanya.
 Tabel lengkap (Dice dan IoU per kelas, mIoU, HD95, hasil in-domain) ada di `tables/lampiran_uji_utama_semua_metrik.csv`.
 
 ## 3. Data
+Link Drive : https://drive.google.com/drive/folders/1QEl4H5icYMdaE0JIh8pKQJcQiB2rCqX8?usp=sharing
 
 - **Sumber:** Zheng dkk. (2018), *Micron* 107, 55–71. Data: Mendeley Data, DOI [10.17632/w7cvnmn4c5.1](https://doi.org/10.17632/w7cvnmn4c5.1).
 - **D1:** 300 citra mikroskop biasa (ukuran asli 88–120 piksel, 30 variasi). **D2:** 100 citra CellaVision (300×300). Masker 3 kelas: latar (0), sitoplasma (128), nukleus (255).
