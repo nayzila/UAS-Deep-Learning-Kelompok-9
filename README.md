@@ -1,4 +1,4 @@
-# Warna Diubah atau Model Dilatih Kebal?
+# Project pengganti UAS Deep Learning
 ### Normalisasi Pewarnaan vs Augmentasi Warna pada Segmentasi Nukleus–Sitoplasma Sel Darah Putih Lintas Domain
 
 **Tugas Besar Pengganti UAS · Sub-topik T3-A · Deep Learning for Image – Computer Vision Lanjutan (Kelas Deep Learning A)**
@@ -8,8 +8,6 @@ Program Studi S1 Sistem Informasi · Tim Tam · Dosen pengampu: Dr. Wahyudi Seti
 |---|---|---|
 | Elfina Lukna Zunaida (ketua) | 240441100013 | Data dan EDA, audit kebocoran, model U-Net, normalisasi pewarnaan (Ablasi 1), evaluasi |
 | Nayzila Sukma Laudyandana | 240441100037 | Model DeepLabV3+, pelatihan multi-seed, color jitter (Ablasi 2), Grad-CAM dan galeri kesalahan, efisiensi, uji ketahanan warna |
-
-> Model dalam repositori ini adalah **prototipe riset, bukan alat diagnosis**. Keluarannya harus ditinjau tenaga ahli.
 
 ---
 
@@ -120,35 +118,12 @@ Penanganan masker kosong: bila prediksi dan masker asli sama-sama kosong, Dice =
 
 Diukur pada Tesla T4, float32, 10 citra warm-up, rerata 60 citra. Normalisasi menambah waktu pra-pemrosesan 24,7 ms/citra (Reinhard) dan 32,5 ms/citra (Macenko) di CPU; jitter tidak menambah waktu inferensi.
 
-## 8. Struktur repositori
-
-```
-.
-├── TimTam_T3A_Notebook_M2_M3_FIXED.ipynb   # seluruh kode (Sel 1–38), dijalankan dari atas ke bawah
-├── README.md
-├── splits/
-│   └── split_seed42.csv                     # split tetap seed 42
-├── logs/
-│   ├── audit_per_berkas.csv                 # statistik audit tiap citra
-│   ├── audit_duplikat.csv                   # pasangan duplikat/sangat mirip
-│   ├── audit_duplikat_ringkasan.json
-│   ├── masker_nilai_di_luar_label.csv
-│   ├── normalisasi_gagal_*.csv              # kegagalan normalisasi (kosong)
-│   ├── konfigurasi_terpilih.json
-│   ├── lingkungan.json                      # versi pustaka dan GPU
-│   └── run_gagal.csv                        # hanya ada bila ada run gagal
-├── results/
-│   └── <id_run>/                            # summary.json, history.csv, per_image.csv
-├── tables/                                  # tabel laporan (CSV) dan semua_tabel.xlsx
-├── figures/                                 # gambar laporan
-└── docs/                                    # laporan M1, M2, M3
-```
 
 **Penamaan run:** `<arsitektur>_<sumber>to<target>_<kondisi>_s<seed>`, misalnya `unet_D1toD2_baseline_s42`. Arsitektur: `unet`, `deeplab`. Kondisi: `baseline`, `reinhard`, `macenko`, `jitter_lemah`, `jitter_sedang`, `jitter_kuat`.
 
 **Tidak diunggah:** dataset Zheng dan folder `ckpt/` (bobot model, fp16). Keduanya dibuat ulang oleh notebook.
 
-## 9. Cara mereproduksi
+## 8. Cara mereproduksi
 
 **Kebutuhan:** akun Google (Colab dan Drive), runtime GPU T4, dan sekitar 3–5 jam waktu total bila dijalankan penuh (boleh dicicil).
 
@@ -173,7 +148,7 @@ Diukur pada Tesla T4, float32, 10 citra warm-up, rerata 60 citra. Normalisasi me
 
 **Catatan reproduksibilitas.** Seed diatur untuk Python, NumPy, dan PyTorch, tetapi hasil GPU tidak dijamin identik bit-per-bit antar sesi atau versi pustaka. Versi `grad-cam` dan `imagehash` tidak tercatat otomatis; ambil dengan `pip show grad-cam imagehash`.
 
-## 10. Keterbatasan
+## 9. Keterbatasan
 
 - Data sangat kecil (D2 hanya 100 citra; set uji D2 hanya 20 citra), sehingga SD antar seed besar dan selisih kecil sebaiknya tidak ditafsirkan berlebihan.
 - Hanya dua domain yang diuji, dan setiap citra berisi satu sel; hasil belum tentu berlaku untuk apusan padat atau sel bertumpuk.
@@ -183,11 +158,11 @@ Diukur pada Tesla T4, float32, 10 citra warm-up, rerata 60 citra. Normalisasi me
 - Kategori kesalahan ditentukan dengan aturan otomatis (luas dan jumlah komponen); pelabelan manual belum dilakukan. Grad-CAM hanya dibuat untuk baseline dan jitter kuat (tidak untuk normalisasi) dan hanya dugaan, bukan bukti.
 - Uji eksternal LISC tidak dilakukan.
 
-## 11. Pernyataan penggunaan AI generatif
+## 10. Pernyataan penggunaan AI generatif
 
-Tim menggunakan Claude (Anthropic) untuk membantu menyusun kerangka laporan, memeriksa tata bahasa, membantu menulis sebagian kode Colab, dan membantu merangkum hasil notebook ke dalam draf teks laporan. Desain eksperimen, pelaksanaan run, analisis hasil, dan penafsiran kesalahan dikerjakan dan diverifikasi oleh tim.
+Dalam proses pengerjaan, tim memanfaatkan Claude (Anthropic) sebagai pendamping diskusi dan alat bantu pendukung, terutama untuk menyusun kode Colab, memeriksa ketepatan bahasa,Seluruh gagasan dan keputusan utama, mulai dari perumusan pertanyaan riset dan hipotesis, perancangan eksperimen, bersumber dari tim. Setiap masukan dari AI kami telaah dan sesuaikan terlebih dahulu sebelum digunakan
 
-## 12. Referensi utama
+## 11. Referensi utama
 
 - Zheng, X., Wang, Y., Wang, G., & Liu, J. (2018). Fast and robust segmentation of white blood cell images by self-supervised learning. *Micron*, 107, 55–71.
 - Ronneberger, O., Fischer, P., & Brox, T. (2015). U-Net: Convolutional networks for biomedical image segmentation. *MICCAI 2015*.
@@ -198,9 +173,3 @@ Tim menggunakan Claude (Anthropic) untuk membantu menyusun kerangka laporan, mem
 - Tellez, D., dkk. (2019). Quantifying the effects of data augmentation and stain color normalization in convolutional neural networks for computational pathology. *Medical Image Analysis*, 58, 101544.
 - Selvaraju, R. R., dkk. (2017). Grad-CAM: Visual explanations from deep networks via gradient-based localization. *ICCV 2017*.
 - Iakubovskii, P. (2019). Segmentation Models PyTorch. https://github.com/qubvel/segmentation_models.pytorch
-
-Daftar pustaka lengkap ada di laporan akhir (M3).
-
-## 13. Lisensi dan penggunaan data
-
-Kode dalam repositori ini dibuat untuk keperluan tugas kuliah. Dataset Zheng dkk. memiliki ketentuan lisensi dari Mendeley Data dan penulis aslinya; ikuti ketentuan tersebut dan kutip artikel Zheng dkk. (2018) bila memakainya. Lisensi kode: *[isi bila ada]*.
